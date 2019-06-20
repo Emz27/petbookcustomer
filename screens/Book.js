@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  AsyncStorage,
   StyleSheet,
   Text,
   TextInput,
@@ -10,6 +9,8 @@ import {
   Button,
   Picker,
 } from 'react-native';
+
+import AsyncStorage from '@react-native-community/async-storage';
 
 import posed from 'react-native-pose';
 import firebase from 'react-native-firebase';

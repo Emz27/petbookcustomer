@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import {AsyncStorage, View, ActivityIndicator, StyleSheet, Dimensions } from 'react-native'
+import { View, ActivityIndicator, StyleSheet, Dimensions } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage';
 
 import firebase from 'react-native-firebase';
 import moment from 'moment'

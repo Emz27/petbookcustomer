@@ -2,19 +2,20 @@
 
 buildscript {
     ext {
-        buildToolsVersion = "28.0.2"
+        buildToolsVersion = "28.0.3"
         minSdkVersion = 16
-        compileSdkVersion = 27
-        targetSdkVersion = 27
-        supportLibVersion = "27.1.1"
+        compileSdkVersion = 28
+        targetSdkVersion = 28
+        supportLibVersion = "28.0.0"
     }
     repositories {
         google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0'
-        classpath 'com.google.gms:google-services:4.0.1'
+        classpath("com.android.tools.build:gradle:3.4.1")
+        classpath 'com.google.gms:google-services:4.2.0'
+
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -29,24 +30,5 @@ allprojects {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
             url "$rootDir/../node_modules/react-native/android"
         }
-        maven {
-            // Local Maven repo containing AARs with JSC library built for Android
-            url "$rootDir/../node_modules/jsc-android/dist"
-        }
     }
-}
-
-// ext {
-//     compileSdkVersion   = 27
-//     targetSdkVersion    = 27
-//     buildToolsVersion   = "28.0.2"
-//     supportLibVersion   = "27.1.1"
-//     googlePlayServicesVersion = "11.8.0"
-//     androidMapsUtilsVersion = "0.5+"
-// }
-
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.6'
-    distributionUrl = distributionUrl.replace("bin", "all")
 }

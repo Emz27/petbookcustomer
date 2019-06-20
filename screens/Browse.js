@@ -9,10 +9,11 @@ import {
   Text,
   TouchableNativeFeedback ,
   View,
-  AsyncStorage,
   FlatList,
   Button,
 } from 'react-native';
+
+import AsyncStorage from '@react-native-community/async-storage';
 
 import posed from 'react-native-pose';
 import firebase from 'react-native-firebase';
