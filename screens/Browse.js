@@ -136,9 +136,9 @@ export default class Browse extends React.Component {
       reservations.push({
         reservationDocId: id,
         ...data,
-        dateTimeStart: moment(data.dateTimeStart),
-        dateTimeEnd: moment(data.dateTimeEnd),
-        dateTime: moment(data.dateTime),
+        dateTimeStart: moment(data.dateTimeStart.toDate()),
+        dateTimeEnd: moment(data.dateTimeEnd.toDate()),
+        dateTime: moment(data.dateTime.toDate()),
       });
     }
     reservations.sort(function(a,b){
@@ -202,9 +202,18 @@ export default class Browse extends React.Component {
       let reservations = this.state.reservations.filter(r=>r.petshopDocId == service.petshopDocId);
 
       let usedSlots = reservations.filter(item=>{
-        if(item.petshopDocId == service.petshopDocId && moment(item.dateTimeStart).isSame(moment(this.state.dateTimeFilter), 'day') && moment(item.dateTimeStart).isSameOrAfter(moment()) && item.status != "cancelled"){
+        let dateTimeFilter = this.state.dateTimeFilter;
+        let today = moment();
+        if(item.petshopDocId == service.petshopDocId && item.dateTimeStart.isSame(dateTimeFilter, 'day') && item.dateTimeStart.isSameOrAfter(today) && item.status != "cancelled"){
           try{
-            groomers.find(gm=>gm.groomerDocId == item.groomerDocId).workCount++;
+            let groomer = groomers.find(gm=>gm.groomerDocId == item.groomerDocId);
+            if(groomer){
+              let workCount = groomer.workCount;
+              if(workCount){
+                groomer.workCount + 1;
+              }
+              else groomer.workCount = 1;
+            }
           }catch(e){console.error(e.message)}
   
           return true;
@@ -216,8 +225,7 @@ export default class Browse extends React.Component {
       let availableSlots = this.timeSlots.map((slot)=>{
         return {
           timeSlot: slot,
-          // dateTimeSlot: moment(moment(this.state.dateTimeFilter).format("MM/DD/YYYY ") + slot),
-          dateTimeSlot: moment(moment().format("YYYY-MM-DD")+" "+slot),
+          dateTimeSlot: moment(this.state.dateTimeFilter.format("YYYY-MM-DD")+" "+slot, "YYYY-MM-DD h:mm a"),
           slots: groomers.length,
           groomers: [...groomers],
         }
@@ -285,9 +293,9 @@ export default class Browse extends React.Component {
           reservations.push({
             reservationDocId: id,
             ...data,
-            dateTimeStart: moment(data.dateTimeStart),
-            dateTimeEnd: moment(data.dateTimeEnd),
-            dateTime: moment(data.dateTime),
+            dateTimeStart: moment(data.dateTimeStart.toDate()),
+            dateTimeEnd: moment(data.dateTimeEnd.toDate()),
+            dateTime: moment(data.dateTime.toDate()),
           });
         }
         reservations.sort(function(a,b){

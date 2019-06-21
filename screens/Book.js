@@ -102,9 +102,9 @@ export default class Book extends React.Component {
           reservations.push({
             reservationDocId: id,
             ...data,
-            dateTimeStart: moment(data.dateTimeStart),
-            dateTimeEnd: moment(data.dateTimeEnd),
-            dateTime: moment(data.dateTime),
+            dateTimeStart: moment(data.dateTimeStart.toDate()),
+            dateTimeEnd: moment(data.dateTimeEnd.toDate()),
+            dateTime: moment(data.dateTime.toDate()),
           });
           
         }
@@ -122,9 +122,16 @@ export default class Book extends React.Component {
   }
   async getAvailableSlots(date){
     let usedSlots = this.state.reservations.filter(item=>{
-      if(moment(item.dateTimeStart).isSame(moment(date), 'day') && moment(item.dateTimeStart).isSameOrAfter(moment()) && item.status != "cancelled"){
+      if(item.dateTimeStart.isSame(moment(date, "MM/DD/YYYY"), 'day') && item.dateTimeStart.isSameOrAfter(moment()) && item.status != "cancelled"){
         try{
-          this.state.groomers.find(gm=>gm.groomerDocId == item.groomerDocId).workCount++;
+          let groomer = groomers.find(gm=>gm.groomerDocId == item.groomerDocId);
+          if(groomer){
+            let workCount = groomer.workCount;
+            if(workCount){
+              groomer.workCount + 1;
+            }
+            else groomer.workCount = 1;
+          }
         }catch(e){console.error(e.message)}
 
         return true;
@@ -134,7 +141,7 @@ export default class Book extends React.Component {
     let availableSlots = this.timeSlots.map((slot)=>{
       return {
         timeSlot: slot,
-        dateTimeSlot: moment(moment(date).format("MM/DD/YYYY ") + slot),
+        dateTimeSlot: moment(moment(date, "MM/DD/YYYY").format("MM/DD/YYYY ") + slot, "MM/DD/YYYY h:mm a"),
         slots: this.state.groomers.length,
         groomers: [...this.state.groomers],
       }
@@ -159,14 +166,14 @@ export default class Book extends React.Component {
       }
       else return false;
     })
-    availableSlots = availableSlots.filter((slot, index)=>slot.dateTimeSlot.isSame(moment(date),'day') && slot.dateTimeSlot.isSameOrAfter(moment()));
+    availableSlots = availableSlots.filter((slot, index)=>slot.dateTimeSlot.isSame(moment(date, "MM/DD/YYYY"),'day') && slot.dateTimeSlot.isSameOrAfter(moment()));
     
     this.setState({usedSlots, availableSlots})
   }
   changeDate(date){
     this.getAvailableSlots(date);
     this.setState({
-      date: moment(date).format("MM/DD/YYYY")
+      date: moment(date, "MM/DD/YYYY").format("MM/DD/YYYY")
     })
   }
   async onSubmit(){

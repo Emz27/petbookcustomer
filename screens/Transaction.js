@@ -145,8 +145,8 @@ export default class Transaction extends React.Component {
                   <View>
                       <View>
                         <Text>Appointment Date & Time</Text>
-                        <Text style={{marginLeft:20 , fontSize: 14,fontWeight: "bold"}}>{moment(this.state.selectedTransaction.dateTimeStart).format("MM/DD/YYYY")}</Text>
-                        <Text style={{marginLeft:20 , fontSize: 14,fontWeight: "bold"}}>{moment(this.state.selectedTransaction.dateTimeStart).format("h:mm a") + " - " + moment(this.state.selectedTransaction.dateTimeEnd).format("h:mm a")}</Text>
+                        <Text style={{marginLeft:20 , fontSize: 14,fontWeight: "bold"}}>{moment(this.state.selectedTransaction.dateTimeStart.toDate()).format("MM/DD/YYYY")}</Text>
+                        <Text style={{marginLeft:20 , fontSize: 14,fontWeight: "bold"}}>{moment(this.state.selectedTransaction.dateTimeStart.toDate()).format("h:mm a") + " - " + moment(this.state.selectedTransaction.dateTimeEnd.toDate()).format("h:mm a")}</Text>
                       </View>
                   </View>
               </View>
@@ -236,7 +236,7 @@ export default class Transaction extends React.Component {
                   <Text>{item.status}</Text>
                 </View>
                 <View style={{flex: 1, alignItems: "center"}}>
-                  <Text>{(item.appointmentDateTime)?moment(item.appointmentDateTime).format("MM/DD/YYYY"):""}</Text>
+                  <Text>{moment(item.dateTimeStart.toDate()).format("MM/DD/YYYY")}</Text>
                 </View>
               </View>
               <View style={{flexDirection: "row"}}>
