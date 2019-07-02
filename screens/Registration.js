@@ -137,8 +137,8 @@ export default class HomeScreen extends React.Component {
   }
   render(){
     return (
-      <ScrollView style={{flex: 1}} contentContainerStyle={styles.container}>
-        <KeyboardAvoidingView>
+      <KeyboardAvoidingView style={{flex: 1}}>
+        
         <View style={styles.container}>
         <View style={styles.textInput}>
           <TextInput
@@ -193,7 +193,6 @@ export default class HomeScreen extends React.Component {
         <View style={{width: 100, marginRight: 200}}><Button title="Login" disabled={this.state.isLoading} onPress={()=>this.props.navigation.navigate('Login')} /></View>
       </View>
       </KeyboardAvoidingView>
-      </ScrollView>
     )
   }
 }
@@ -202,7 +201,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: '#fff',
   },
   textInput: {

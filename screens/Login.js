@@ -108,7 +108,7 @@ export default class HomeScreen extends React.Component {
   render(){
     return (
      
-      <ScrollView style={{flex: 1}} contentContainerStyle={styles.container}>
+      <View style={styles.container}>
 
         <View style={styles.textInput}> 
        {UserIcon} 
@@ -142,7 +142,7 @@ export default class HomeScreen extends React.Component {
         
         <View style={{width: 100, marginBottom: 50}}><Button title="Login" disabled={this.state.isLoading} onPress={this.onSubmit} /></View>
         <View style={{width: 100, marginLeft: 200}}><Button title="Register" onPress={()=>this.props.navigation.navigate('Register')} /></View>
-      </ScrollView>
+      </View>
     );
   }
 }
@@ -152,6 +152,7 @@ export default class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: "column",
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#fff',
