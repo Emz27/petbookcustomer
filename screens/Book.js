@@ -121,6 +121,10 @@ export default class Book extends React.Component {
     });
   }
   async getAvailableSlots(date){
+    
+    let groomers = [...this.state.groomers];
+    let reservations = [...this.state.reservations];
+    
     let usedSlots = this.state.reservations.filter(item=>{
       if(item.dateTimeStart.isSame(moment(date, "MM/DD/YYYY"), 'day') && item.dateTimeStart.isSameOrAfter(moment()) && item.status != "cancelled"){
         try{
@@ -142,8 +146,8 @@ export default class Book extends React.Component {
       return {
         timeSlot: slot,
         dateTimeSlot: moment(moment(date, "MM/DD/YYYY").format("MM/DD/YYYY ") + slot, "MM/DD/YYYY h:mm a"),
-        slots: this.state.groomers.length,
-        groomers: [...this.state.groomers],
+        slots: groomers.length,
+        groomers: [...groomers],
       }
     })
     availableSlots = availableSlots.filter((slot, index)=>{
