@@ -160,7 +160,7 @@ export default class Browse extends React.Component {
         ...data,
         key: id,
         serviceDocId: id,
-        distance: getDistance(this.user.location, data.location)
+        distance: (this.user.location)?getDistance(this.user.location, data.location): null,
       }
       let petshop = {
         key: data.petshopDocId,
@@ -259,7 +259,9 @@ export default class Browse extends React.Component {
 
       filteredServices.push(service);
     }
-    filteredServices.sort((a,b)=>b.distance - a.distance);
+    if(this.user.location != null){
+      filteredServices.sort((a,b)=>b.distance - a.distance);
+    }
     filteredServices.sort((a,b)=>b.textOccurence - a.textOccurence);
     this.setState({filteredServices})
   }
@@ -359,7 +361,11 @@ export default class Browse extends React.Component {
                 <View style={{flex: 1, alignItems: "center"}}>
                   <Text style={{fontWeight: "bold"}}> {item.petshopName} </Text>
                   <Text>Petshop</Text>
-                  <Text> {Math.round( (item.distance/1000) * 10 ) / 10}km away</Text>
+                  {
+                    (this.user.location != null)
+                    ?<Text> {Math.round( (item.distance/1000) * 10 ) / 10}km away</Text>
+                    : null
+                  }
                 </View>
               </View>
               <View style={{flexDirection: "row"}}>

@@ -34,10 +34,7 @@ export default class AuthLoading extends Component{
           return this.props.navigation.navigate("Login");
         }
         console.log("user details retrived!");
-        let location = {
-          latitude: 0,
-          longitude: 0,
-        }
+        let location = null;
         try{
           let pos = await getCurrentPosition();
           if(pos){
