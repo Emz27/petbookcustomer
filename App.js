@@ -11,13 +11,16 @@ import React, {Component} from 'react';
 import {Keyboard, View, StyleSheet,TouchableWithoutFeedback, KeyboardAvoidingView, ScrollView} from 'react-native';
 
 import AppNavigator from './navigation/AppNavigator';
+import OfflineNotice from './components/OfflineNotice';
+import LinearGradient from 'react-native-linear-gradient';
 
 export default class App extends Component{
   render() {
     return (
-      <View style={{flex: 1}}>
+      <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={{flex: 1}}>
         <AppNavigator/>
-      </View>
+        <OfflineNotice/>
+      </LinearGradient>
     );
   }
 }
